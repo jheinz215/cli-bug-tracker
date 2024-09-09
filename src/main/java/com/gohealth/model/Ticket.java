@@ -2,6 +2,7 @@ package com.gohealth.model;
 
 import org.kohsuke.args4j.Argument;
 import org.kohsuke.args4j.Option;
+import org.kohsuke.args4j.spi.StringArrayOptionHandler;
 
 import com.opencsv.bean.CsvBindByPosition;
 
@@ -9,9 +10,10 @@ public class Ticket {
 
 	@CsvBindByPosition(position = 0)
 	private String id;
-	@Option(name="-desc", usage="Ticket description")
+	@Option(name="-desc", handler=StringArrayOptionHandler.class,
+			usage="-desc=<Enter ticket description>")
 	@CsvBindByPosition(position = 1)
-	private String description;
+	private String[] description;
 	@Option(name="-parent", usage="Parent ID related to ticket")
 	@CsvBindByPosition(position = 2)
 	private String parent;
@@ -33,9 +35,14 @@ public class Ticket {
 		this.id = id;
 	}
 	public String getDescription() {
-		return description;
+		StringBuilder cmd = new StringBuilder();
+	    for (int i = 0; i < description.length; i++) {
+	        cmd.append(description[i]);
+	        cmd.append(" ");
+	    }
+	    return cmd.toString().trim();
 	}
-	public void setDescription(String description) {
+	public void setDescription(String[] description) {
 		this.description = description;
 	}
 	public String getParent() {
