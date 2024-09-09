@@ -5,22 +5,28 @@ import org.kohsuke.args4j.Option;
 import org.kohsuke.args4j.spi.StringArrayOptionHandler;
 
 import com.opencsv.bean.CsvBindByPosition;
+import com.opencsv.bean.CsvBindAndSplitByPosition;
 
 public class Ticket {
 
 	@CsvBindByPosition(position = 0)
 	private String id;
+	
 	@Option(name="-desc", handler=StringArrayOptionHandler.class,
 			usage="-desc=<Enter ticket description>")
 	@CsvBindByPosition(position = 1)
 	private String[] description;
+	
 	@Option(name="-parent", usage="Parent ID related to ticket")
 	@CsvBindByPosition(position = 2)
 	private String parent;
+	
 	@CsvBindByPosition(position = 3)
 	private TicketStatus status;
+	
 	@CsvBindByPosition(position = 4)
 	private String createDtm;
+	
 	@Option(name="-link", usage="URL to log")
 	@CsvBindByPosition(position = 5)
 	private String link;
@@ -42,8 +48,8 @@ public class Ticket {
 	    }
 	    return cmd.toString().trim();
 	}
-	public void setDescription(String[] description) {
-		this.description = description;
+	public void setDescription(String description) {
+		this.description = description.split("\\s+");
 	}
 	public String getParent() {
 		return parent;

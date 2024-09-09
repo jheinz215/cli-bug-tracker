@@ -23,7 +23,7 @@ public class CliBugTrackerApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		//System.out.println("Inside run.");
-		if( args.length > 0 && args.length < 7 ) {
+		if( args.length > 0 ) {
 			controller.onCommand(args);
 		}
 	}
